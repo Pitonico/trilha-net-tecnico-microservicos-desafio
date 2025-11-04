@@ -76,7 +76,7 @@ namespace APIs.Estoque.Tests.Application.Services
         public async Task ObterProdutoPorId_DeveLancarExcecao_QuandoNaoExistir()
         {
             _mockRepo.Setup(r => r.ObterProdutoPorId(1))
-                .ReturnsAsync((Produto)null);
+                .ReturnsAsync((Produto?)null);
 
             var action = async () => await _service.ObterProdutoPorId(1);
 
@@ -127,7 +127,7 @@ namespace APIs.Estoque.Tests.Application.Services
         public async Task AtualizarProduto_DeveLancarExcecao_QuandoNaoExistir()
         {
             _mockRepo.Setup(r => r.ObterProdutoPorId(1))
-                     .ReturnsAsync((Produto)null);
+                     .ReturnsAsync((Produto?)null);
 
             var action = async () => await _service.AtualizarProduto(1, new ProdutoRequestDTO() { Nome = "" });
 
@@ -174,7 +174,7 @@ namespace APIs.Estoque.Tests.Application.Services
         public async Task ReduzirEstoque_DeveLancarExcecao_QuandoProdutoNaoExistir()
         {
             _mockRepo.Setup(r => r.ObterProdutoPorId(1))
-                     .ReturnsAsync((Produto)null);
+                     .ReturnsAsync((Produto?)null);
 
             var action = async () => await _service.ReduzirEstoque(1, 1);
 

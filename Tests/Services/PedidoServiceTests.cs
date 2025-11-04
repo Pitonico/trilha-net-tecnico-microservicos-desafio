@@ -37,10 +37,10 @@ namespace APIs.Vendas.Tests.Application.Services
             var dto = new PedidoRequestDTO
             {
                 Status = StatusPedidoEnum.Pendente,
-                Itens = new List<ItemPedidoRequestDTO>
-                {
+                Itens =
+                [
                     new() { ProdutoId = 1, Quantidade = 2 }
-                }
+                ]
                 
             };
 
@@ -52,10 +52,10 @@ namespace APIs.Vendas.Tests.Application.Services
             {
                 Id = 99,
                 Status = StatusPedidoEnum.Pendente,
-                Itens = new List<ItemPedido>
-                {
+                Itens =
+                [
                     new() { ProdutoId = 1, Quantidade = 2, PrecoUnitario = 10, SubTotal = 20 }
-                },
+                ],
                 Total = 20
             };
 
@@ -84,7 +84,7 @@ namespace APIs.Vendas.Tests.Application.Services
             var pedidoRequest = new PedidoRequestDTO
             {
                 Status = (StatusPedidoEnum)999,
-                Itens = new List<ItemPedidoRequestDTO>()
+                Itens = []
             };
 
             var action = async () => await _service.CriarPedido(pedidoRequest);
@@ -111,7 +111,7 @@ namespace APIs.Vendas.Tests.Application.Services
         public async Task ObterPedidoPorId_DeveLancarExcecao_QuandoNaoEncontrado()
         {
             _mockRepo.Setup(r => r.ObterPedidoProId(1))
-                     .ReturnsAsync((Pedido)null);
+                     .ReturnsAsync((Pedido?)null);
 
             var action = async () => await _service.ObterPedidoPorId(1);
 
@@ -169,7 +169,7 @@ namespace APIs.Vendas.Tests.Application.Services
         public async Task AtualizarStatus_DeveLancarExcecao_QuandoPedidoNaoEncontrado()
         {
             _mockRepo.Setup(r => r.ObterPedidoProId(1))
-                     .ReturnsAsync((Pedido)null);
+                     .ReturnsAsync((Pedido?)null);
 
             var action = async () => await _service.AtualizarStatus(1, StatusPedidoEnum.Pendente);
 
