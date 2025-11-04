@@ -14,6 +14,7 @@ using APIs.Vendas.Application.Services;
 using APIs.Vendas.Infrastructure.Data;
 using APIs.Vendas.Infrastructure.Interfaces;
 using APIs.Vendas.Infrastructure.Repositories;
+using Vendas.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<IEstoqueService, EstoqueService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-builder.Services.AddSingleton<RabbitMqPublisher>();
+builder.Services.AddSingleton<IRabbitMqPublisher, RabbitMqPublisher>();
 
 builder.Services.AddHttpClient();
 

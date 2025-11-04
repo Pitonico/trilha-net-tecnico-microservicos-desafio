@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Estoque.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<EstoqueDbContexto>(options =>
 
 // DI RabbitMQ
 builder.Services.AddSingleton(typeof(RabbitMqConsumer<>));
-builder.Services.AddSingleton<RabbitMqPublisher>();
+builder.Services.AddSingleton<IRabbitMqPublisher, RabbitMqPublisher>();
 
 // HostedService para consumer
 builder.Services.AddHostedService<PedidoConsumerService>();

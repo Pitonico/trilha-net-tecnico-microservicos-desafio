@@ -1,10 +1,10 @@
 using APIs.Estoque.Application.DTOs;
 using APIs.Estoque.Application.Interfaces;
 using APIs.Estoque.Application.Mappers;
-using APIs.Estoque.Application.Messaging;
 using APIs.Estoque.Application.Messaging.Events;
 using APIs.Estoque.Domain.Entities;
 using APIs.Estoque.Infrastructure.Interfaces;
+using Estoque.Application.Interfaces;
 using Shared;
 using Shared.DTOs;
 
@@ -14,10 +14,10 @@ namespace APIs.Estoque.Application.Services
     {
         private readonly IProdutoRepository _repositorio;
 
-        private readonly RabbitMqPublisher _publisher;
+        private readonly IRabbitMqPublisher _publisher;
         private readonly ILogger _logger;
         
-        public ProdutoService(IProdutoRepository repositorio, ILogger<ProdutoService> logger, RabbitMqPublisher publisher)
+        public ProdutoService(IProdutoRepository repositorio, ILogger<ProdutoService> logger, IRabbitMqPublisher publisher)
         {
             _repositorio = repositorio;
             _logger = logger;

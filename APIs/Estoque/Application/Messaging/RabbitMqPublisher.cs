@@ -1,10 +1,11 @@
 using System.Text;
 using System.Text.Json;
+using Estoque.Application.Interfaces;
 using RabbitMQ.Client;
 
 namespace APIs.Estoque.Application.Messaging
 {
-    public class RabbitMqPublisher : IAsyncDisposable
+    public class RabbitMqPublisher : IRabbitMqPublisher, IAsyncDisposable
     {
         private readonly ILogger<RabbitMqPublisher> _logger;
         private readonly ConnectionFactory _factory;

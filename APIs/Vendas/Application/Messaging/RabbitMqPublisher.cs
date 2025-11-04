@@ -1,11 +1,11 @@
 using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
-using APIs.Vendas.Application.Interfaces;
+using Vendas.Application.Interfaces;
 
 namespace APIs.Vendas.Application.Messaging
 {
-    public class RabbitMqPublisher : IAsyncDisposable
+    public class RabbitMqPublisher : IRabbitMqPublisher, IAsyncDisposable
     {
         private readonly ILogger<RabbitMqPublisher> _logger;
         private readonly ConnectionFactory _factory;

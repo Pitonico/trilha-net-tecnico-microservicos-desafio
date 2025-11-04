@@ -1,6 +1,8 @@
+using APIs.Estoque.Application.Messaging;
 using APIs.Estoque.Application.Services;
 using APIs.Estoque.Domain.Entities;
 using APIs.Estoque.Infrastructure.Interfaces;
+using Estoque.Application.Interfaces;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -12,13 +14,15 @@ namespace APIs.Estoque.Tests.Application.Services
     {
         private readonly Mock<IProdutoRepository> _mockRepo;
         private readonly Mock<ILogger<ProdutoService>> _mockLogger;
+        private readonly Mock<IRabbitMqPublisher> _mockPublisher;
         private readonly ProdutoService _service;
 
         public ProdutoServiceTests()
         {
             _mockRepo = new Mock<IProdutoRepository>();
             _mockLogger = new Mock<ILogger<ProdutoService>>();
-            _service = new ProdutoService(_mockRepo.Object,  _mockLogger.Object);
+            _mockPublisher = new Mock<IRabbitMqPublisher>();
+            _service = new ProdutoService(_mockRepo.Object,  _mockLogger.Object, _mockPublisher.Object);
         }
 
         [Fact]

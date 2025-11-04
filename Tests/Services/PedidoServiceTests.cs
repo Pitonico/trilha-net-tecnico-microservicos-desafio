@@ -9,6 +9,7 @@ using APIs.Vendas.Application.Interfaces;
 using Shared.DTOs;
 using Shared.Enums;
 using Microsoft.Extensions.Logging;
+using Vendas.Application.Interfaces;
 
 namespace APIs.Vendas.Tests.Application.Services
 {

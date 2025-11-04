@@ -7,7 +7,7 @@ using APIs.Vendas.Application.Mappers;
 using APIs.Vendas.Application.Messaging.Events;
 using APIs.Vendas.Domain.Entities;
 using APIs.Vendas.Infrastructure.Interfaces;
-using APIs.Vendas.Application.Messaging;
+using Vendas.Application.Interfaces;
 
 namespace APIs.Vendas.Application.Services
 {
@@ -15,14 +15,14 @@ namespace APIs.Vendas.Application.Services
     {
         private readonly IPedidoRepository _repositorio;
         private readonly IEstoqueService _estoqueService;
-        private readonly RabbitMqPublisher _publisher;
+        private readonly IRabbitMqPublisher _publisher;
 
         private readonly ILogger<PedidoService> _logger;
 
         public PedidoService(
             IPedidoRepository repositorio,
             IEstoqueService estoqueService,
-            RabbitMqPublisher publisher,
+            IRabbitMqPublisher publisher,
             ILogger<PedidoService> logger)
         {
             _repositorio = repositorio;
