@@ -1,0 +1,51 @@
+services:
+  postgres-estoque:
+    image: postgres:18
+    container_name: postgres_estoque_dev
+    environment:
+      POSTGRES_DB: GestaoEstoqueDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
+    networks:
+      - microservices_net
+    volumes:
+      - pgdata_estoque_dev:/var/lib/postgresql/data
+
+  postgres-vendas:
+    image: postgres:18
+    container_name: postgres_vendas_dev
+    environment:
+      POSTGRES_DB: GestaoVendasDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5434:5432"
+    networks:
+      - microservices_net
+    volumes:
+      - pgdata_vendas_dev:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:4.1.4-management
+    container_name: rabbitmq_dev
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - microservices_net
+    volumes:
+      - rabbitmqdata_dev:/var/lib/rabbitmq
+
+networks:
+  microservices_net:
+    driver: bridge
+
+volumes:
+  pgdata_estoque_dev:
+  pgdata_vendas_dev:
+  rabbitmqdata_dev:

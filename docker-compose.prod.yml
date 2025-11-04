@@ -1,0 +1,107 @@
+services:
+  # --- API Gateway ---
+  gateway:
+    build:
+      context: .
+      dockerfile: ./APIs/Gateway/Dockerfile
+    container_name: gateway_prod
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - vendas
+      - estoque
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  # --- API Estoque ---
+  estoque:
+    build:
+      context: .
+      dockerfile: ./APIs/Estoque/Dockerfile
+    container_name: estoque_prod
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5001:5000"
+    depends_on:
+      - postgres-estoque
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  # --- API Vendas ---
+  vendas:
+    build:
+      context: .
+      dockerfile: ./APIs/Vendas/Dockerfile
+    container_name: vendas_prod
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5002:5000"
+    depends_on:
+      - postgres-vendas
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  # --- POSTGRES ESTOQUE ---
+  postgres-estoque:
+    image: postgres:18
+    container_name: postgres_estoque_prod
+    environment:
+      POSTGRES_DB: GestaoEstoqueDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_estoque_prod:/var/lib/postgresql/data
+    networks:
+      - microservices_net
+
+  # --- POSTGRES VENDAS ---
+  postgres-vendas:
+    image: postgres:18
+    container_name: postgres_vendas_prod
+    environment:
+      POSTGRES_DB: GestaoVendasDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata_vendas_prod:/var/lib/postgresql/data
+    networks:
+      - microservices_net
+
+  # --- RABBITMQ ---
+  rabbitmq:
+    image: rabbitmq:4.1.4-management
+    container_name: rabbitmq_prod
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - microservices_net
+    volumes:
+      - rabbitmqdata_prod:/var/lib/rabbitmq
+
+# --- Rede e Volumes ---
+networks:
+  microservices_net:
+    driver: bridge
+
+volumes:
+  pgdata_estoque_prod:
+  pgdata_vendas_prod:
+  rabbitmqdata_prod:

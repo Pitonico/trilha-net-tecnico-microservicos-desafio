@@ -1,0 +1,38 @@
+@ContentType = application/json
+@Host = http://localhost:5265
+
+### 🔍 Obter todos os produtos (paginação)
+GET {{Host}}/api/produtos?pageNumber=1&pageSize=5
+Accept: {{ContentType}}
+
+### 🔎 Obter produto por ID
+GET {{Host}}/api/produtos/1
+Accept: {{ContentType}}
+
+### ➕ Criar novo produto
+POST {{Host}}/api/produtos
+Content-Type: {{ContentType}}
+
+{
+  "nome": "Notebook Dell Inspiron",
+  "preco": 4500.00,
+  "quantidadeEstoque": 20
+}
+
+### ✏️ Atualizar produto existente
+PUT {{Host}}/api/produtos/2
+Content-Type: {{ContentType}}
+
+{
+  "nome": "Notebook Dell Inspiron i7 16GB",
+  "preco": 5200.00,
+  "quantidadeEstoque": 15
+}
+
+### ✏️ Reduzir estoque
+POST {{Host}}/api/produtos/4/reduzirEstoque?quantidadeVendida=5
+Accept: {{ContentType}}
+
+### ❌ Excluir produto
+DELETE {{Host}}/api/produtos/2
+Accept: {{ContentType}}

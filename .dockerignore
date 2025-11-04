@@ -1,0 +1,17 @@
+# Ignorar build e IDE
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+
+# Git e Docker
+.git/
+.gitignore
+Dockerfile*
+docker-compose*
+.env
+
+# Logs e banco local
+*.log
+*.db
